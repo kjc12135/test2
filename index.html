@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>우리의 천사, 구름이의 하루 ☁️</title>
+  
+  <!-- Google Fonts: Gaegu (Korean Cute Font), Quicksand (English Cute Font) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome for cute icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Gaegu', 'Quicksand', 'sans-serif'],
+            quicksand: ['Quicksand', 'sans-serif']
+          },
+          colors: {
+            brand: {
+              cream: '#FFFDF9',
+              warmBg: '#FAF5EC',
+              pink: '#FFD3D3',
+              pinkLight: '#FFF0F0',
+              yellow: '#FFE9A0',
+              yellowLight: '#FFF9E3',
+              brown: '#8D7B68',
+              brownDark: '#5F5144',
+              sage: '#D9E8D8'
+            }
+          },
+          animation: {
+            'bounce-slow': 'bounce 3s infinite',
+            'float-gentle': 'float 4s ease-in-out infinite',
+            'wiggle-gentle': 'wiggle 1.5s ease-in-out infinite'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' }
+            },
+            wiggle: {
+              '0%, 100%': { transform: 'rotate(-3deg)' },
+              '50%': { transform: 'rotate(3deg)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles for Scrollbars and Interaction Effects -->
+  <style>
+    /* Custom Scrollbar for cute aesthetic */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FAF5EC;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E8D3C4;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #D5B9A4;
+    }
+
+    /* Selection Color */
+    ::selection {
+      background-color: #FFD3D3;
+      color: #5F5144;
+    }
+
+    /* CSS smooth scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* Soft shadow details */
+    .soft-shadow {
+      box-shadow: 0 10px 30px -5px rgba(141, 123, 104, 0.12);
+    }
+    
+    /* Interactive Heart Styles */
+    .floating-heart {
+      position: absolute;
+      pointer-events: none;
+      animation: heartFly 1.2s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+    }
+    
+    @keyframes heartFly {
+      0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0;
+      }
+      15% {
+        opacity: 1;
+        transform: translateY(-20px) scale(1.2);
+      }
+      100% {
+        transform: translateY(-120px) rotate(15deg) scale(0.8);
+        opacity: 0;
+      }
+    }
+  </style>
+  
+  <!-- Vue.js 3 Production CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body class="bg-brand-warmBg text-brand-brownDark font-sans leading-relaxed selection:bg-brand-pink text-xl md:text-2xl antialiased">
+
+  <div id="app" class="relative min-h-screen flex flex-col overflow-x-hidden">
+    
+    <!-- Floating background decorative elements -->
+    <div class="absolute top-10 left-5 text-brand-pink/25 text-5xl pointer-events-none animate-float-gentle"><i class="fa-solid fa-paw"></i></div>
+    <div class="absolute top-1/4 right-8 text-brand-yellow/30 text-6xl pointer-events-none animate-bounce-slow"><i class="fa-solid fa-heart"></i></div>
+    <div class="absolute top-2/4 left-10 text-brand-sage/40 text-5xl pointer-events-none animate-float-gentle" style="animation-delay: 2s;"><i class="fa-solid fa-bone"></i></div>
+    <div class="absolute top-3/4 right-10 text-brand-pink/25 text-6xl pointer-events-none animate-wiggle-gentle"><i class="fa-solid fa-cloud"></i></div>
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-40 bg-brand-cream/80 backdrop-blur-md border-b border-brand-pink/20 py-4 px-6 md:px-12 transition-all duration-300">
+      <div class="max-w-6xl mx-auto flex justify-between items-center">
+        <!-- Logo -->
+        <a href="#hero" class="flex items-center gap-2 text-2xl md:text-3xl font-bold text-brand-brown hover:text-brand-pink duration-300">
+          <span class="animate-bounce-slow text-brand-pink"><i class="fa-solid fa-paw"></i></span>
+          <span>구름이네 홈</span>
+        </a>
+        
+        <!-- Menu -->
+        <div class="hidden md:flex items-center gap-8 text-xl font-bold">
+          <a href="#about" class="hover:text-brand-pink transition-colors relative group py-1">
+            소개
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-pink transition-all group-hover:w-full"></span>
+          </a>
+          <a href="#timeline" class="hover:text-brand-pink transition-colors relative group py-1">
+            하루일과
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-pink transition-all group-hover:w-full"></span>
+          </a>
+          <a href="#gallery" class="hover:text-brand-pink transition-colors relative group py-1">
+            갤러리
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-pink transition-all group-hover:w-full"></span>
+          </a>
+          <a href="#favorites" class="hover:text-brand-pink transition-colors relative group py-1">
+            좋아하는 것
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-pink transition-all group-hover:w-full"></span>
+          </a>
+          <a href="#funfacts" class="hover:text-brand-pink transition-colors relative group py-1">
+            비밀노트
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-pink transition-all group-hover:w-full"></span>
+          </a>
+        </div>
+        
+        <!-- Quick CTA: Give Love button -->
+        <button 
+          @click="spawnHearts($event)" 
+          class="bg-brand-pink hover:bg-brand-brown hover:text-brand-cream text-brand-brownDark px-5 py-2 rounded-full font-bold text-lg soft-shadow hover:scale-105 active:scale-95 duration-300 flex items-center gap-2"
+        >
+          <i class="fa-solid fa-heart animate-wiggle-gentle"></i> 사랑 주기
+        </button>
+      </div>
+    </nav>
+
+    <!-- App Contents (Dynamic Custom Components with Vue) -->
+    <main class="flex-grow">
+      
+      <!-- Hero Section -->
+      <section id="hero" class="py-16 md:py-24 px-6 md:px-12 max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+        <div class="flex-1 text-center md:text-left space-y-6">
+          <span class="bg-brand-pinkLight text-brand-brown border border-brand-pink/40 px-4 py-1.5 rounded-full text-base font-bold tracking-wide uppercase inline-flex items-center gap-1.5">
+            <i class="fa-solid fa-sparkles text-brand-yellow"></i> 반짝이는 우리집 막둥이
+          </span>
+          <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-brand-brownDark">
+            안녕! 나는 <span class="text-brand-pink underline decoration-brand-yellow decoration-wavy underline-offset-8">구름</span>이야 ☁️
+          </h1>
+          <p class="text-2xl md:text-3xl text-brand-brown leading-relaxed font-medium">
+            폭신폭신 하얗고 솜사탕처럼 달콤한 애교쟁이 강아지, <br class="hidden md:block">
+            구름이네 따뜻한 일상에 오신 걸 환영해요!
+          </p>
+          <div class="pt-4 flex flex-wrap justify-center md:justify-start gap-4">
+            <a href="#about" class="bg-brand-brown hover:bg-brand-pink text-brand-cream hover:text-brand-brownDark px-8 py-3.5 rounded-2xl font-bold soft-shadow transition-all duration-300 hover:translate-y-[-2px]">
+              구름이 프로필 보기
+            </a>
+            <button @click="spawnHearts($event)" class="bg-brand-yellow hover:bg-brand-yellowLight text-brand-brownDark px-8 py-3.5 rounded-2xl font-bold soft-shadow transition-all duration-300 hover:translate-y-[-2px] flex items-center gap-2">
+              <i class="fa-solid fa-bone text-brand-brown"></i> 간식 마구 주기
+            </button>
+          </div>
+          
+          <!-- Cute Interactive stats -->
+          <div class="grid grid-cols-3 gap-4 pt-8 max-w-md mx-auto md:mx-0">
+            <div class="bg-brand-cream rounded-2xl p-3 border border-brand-pink/20 text-center soft-shadow">
+              <div class="text-xs text-brand-brown/70">나이</div>
+              <div class="text-lg font-bold text-brand-brownDark">3살 귀요미</div>
+            </div>
+            <div class="bg-brand-cream rounded-2xl p-3 border border-brand-pink/20 text-center soft-shadow">
+              <div class="text-xs text-brand-brown/70">심쿵 지수</div>
+              <div class="text-lg font-bold text-brand-brownDark">10,000%</div>
+            </div>
+            <div class="bg-brand-cream rounded-2xl p-3 border border-brand-pink/20 text-center soft-shadow">
+              <div class="text-xs text-brand-brown/70">받은 하트</div>
+              <div class="text-lg font-bold text-brand-pink font-quicksand">{{ heartCount }} +</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Hero Illustrative Image Panel -->
+        <div class="flex-1 relative">
+          <!-- Decorative circle background -->
+          <div class="absolute inset-0 bg-gradient-to-tr from-brand-pink to-brand-yellow rounded-[50%_30%_70%_30%_/_50%_60%_30%_60%] filter blur-xl opacity-30 animate-float-gentle"></div>
+          
+          <div class="relative mx-auto w-72 h-72 md:w-96 md:h-96 rounded-[40%_60%_40%_60%_/_60%_40%_60%_40%] overflow-hidden border-8 border-brand-cream soft-shadow transform rotate-3 hover:rotate-0 duration-500 group">
+            <!-- Customizable Placeholder: easily swap src with real pet photos -->
+            <img 
+              src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=600" 
+              alt="Cute fluffy puppy looking happy" 
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            <!-- Cute label badge -->
+            <div class="absolute bottom-4 right-4 bg-brand-cream/90 backdrop-blur-sm text-brand-brownDark font-bold px-4 py-1.5 rounded-full text-base border border-brand-pink/30 soft-shadow">
+              ☁️ 산책하고 신난 구름이
+            </div>
+          </div>
+          
+          <!-- Cute sticker overlays -->
+          <div class="absolute -top-4 -left-4 bg-brand-yellow text-brand-brownDark font-bold p-3 rounded-full text-center text-sm shadow-md animate-wiggle-gentle rotate-[-12deg]">
+            실물 파 🐶
+          </div>
+          <div class="absolute bottom-6 -left-12 hidden md:block bg-brand-sage text-brand-brownDark font-bold py-2 px-4 rounded-xl text-sm shadow-md rotate-[8deg]">
+            #모태애교 #개린이
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about" class="py-20 bg-brand-cream border-t border-b border-brand-pink/20 px-6 md:px-12">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center space-y-4 mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-brand-brownDark inline-flex items-center gap-3">
+              <span class="text-brand-pink"><i class="fa-solid fa-id-card"></i></span> 구름이를 소개합니다!
+            </h2>
+            <p class="text-xl md:text-2xl text-brand-brown">어디서든 꼬리를 살랑살랑 흔드는 러블리 구름이의 모든 것</p>
+            <div class="w-16 h-1.5 bg-brand-pink mx-auto rounded-full"></div>
+          </div>
+          
+          <div class="flex flex-col lg:flex-row gap-12 items-center">
+            <!-- Left: Card with essential data -->
+            <div class="w-full lg:w-5/12 bg-brand-warmBg border-2 border-brand-pink/30 rounded-3xl p-8 soft-shadow relative overflow-hidden">
+              <div class="absolute -top-12 -right-12 w-24 h-24 bg-brand-pink/20 rounded-full"></div>
+              
+              <div class="flex items-center gap-4 mb-8">
+                <div class="w-16 h-16 bg-brand-pink text-brand-brownDark rounded-full flex items-center justify-center text-3xl font-bold">
+                  🐾
+                </div>
+                <div>
+                  <h3 class="text-3xl font-bold text-brand-brownDark">구름 (Gureum)</h3>
+                  <p class="text-lg text-brand-brown">Maltipoo (말티푸)</p>
+                </div>
+              </div>
+              
+              <!-- Quick Info Grid -->
+              <div class="space-y-4">
+                <div v-for="(info, index) in petInfo" :key="index" class="flex justify-between items-center py-2.5 border-b border-brand-pink/10 hover:bg-brand-pink/5 px-2 rounded-xl transition-all duration-300">
+                  <span class="text-brand-brown font-bold flex items-center gap-2">
+                    <i :class="info.icon + ' text-brand-pink/80 w-6 text-center'"></i> {{ info.label }}
+                  </span>
+                  <span class="text-brand-brownDark font-medium">{{ info.value }}</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right: Descriptive Warm Story cards -->
+            <div class="w-full lg:w-7/12 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="bg-brand-warmBg p-6 rounded-3xl border border-brand-yellow/30 soft-shadow hover:scale-[1.02] duration-300">
+                <div class="w-10 h-10 rounded-full bg-brand-yellow flex items-center justify-center text-lg mb-4">🍼</div>
+                <h4 class="text-2xl font-bold text-brand-brownDark mb-2">첫 만남의 설렘</h4>
+                <p class="text-lg text-brand-brown leading-relaxed font-sans">
+                  우리가 처음 만나던 날, 품안에 폭 들어와 콩닥콩닥 심장박동을 전해주던 아기 구름이. 그 귀여운 손짓 하나에 우리 가족 모두의 마음이 사르르 녹아버렸답니다.
+                </p>
+              </div>
+              
+              <div class="bg-brand-warmBg p-6 rounded-3xl border border-brand-pink/30 soft-shadow hover:scale-[1.02] duration-300">
+                <div class="w-10 h-10 rounded-full bg-brand-pink flex items-center justify-center text-lg mb-4">✨</div>
+                <h4 class="text-2xl font-bold text-brand-brownDark mb-2">애교쟁이 성격</h4>
+                <p class="text-lg text-brand-brown leading-relaxed font-sans">
+                  세상에서 가족들이 퇴근하는 시간을 제일 잘 알아요! 문 앞 마중은 기본이고, 배를 발라당 뒤집어 꼬리를 헬리콥터처럼 돌리며 기쁨을 만끽하는 애교쟁이랍니다.
+                </p>
+              </div>
+              
+              <div class="bg-brand-warmBg p-6 rounded-3xl border border-brand-sage flex flex-col justify-between soft-shadow hover:scale-[1.02] duration-300 md:col-span-2">
+                <div>
+                  <h4 class="text-2xl font-bold text-brand-brownDark mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-quote-left text-brand-pink text-xs"></i> 
+                    집사의 귀여운 사랑 고백
+                  </h4>
+                  <p class="text-lg text-brand-brown italic leading-relaxed font-sans">
+                    "가끔 네가 무슨 생각을 하고 있는지 너무 궁금해. 말을 하지 못해도 촉촉한 코와 깊고 까만 눈동자로 온 우주만큼의 사랑을 우리에게 전해주는 걸 느끼곤 해. 아프지 말고 언제나 건강하게 우리 곁을 지켜줘, 고마운 내 솜사탕!"
+                  </p>
+                </div>
+                <div class="mt-4 text-right text-base text-brand-brownDark/70 font-semibold">
+                  — 구름이의 영원한 짝꿍, 언니로부터
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Daily Life Section (Timeline) -->
+      <section id="timeline" class="py-20 px-6 md:px-12 max-w-6xl mx-auto">
+        <div class="text-center space-y-4 mb-16">
+          <span class="bg-brand-yellow/40 text-brand-brown font-bold px-4 py-1 rounded-full text-base">Daily Schedule</span>
+          <h2 class="text-4xl md:text-5xl font-bold text-brand-brownDark">구름이의 바쁜(?) 하루 일과</h2>
+          <p class="text-xl md:text-2xl text-brand-brown">자세히 보면 하루 종일 사랑받고 자고 먹는 일정이 전부랍니다 🐾</p>
+          <div class="w-16 h-1.5 bg-brand-yellow mx-auto rounded-full"></div>
+        </div>
+        
+        <!-- Timeline Flow -->
+        <div class="relative border-l-4 border-dashed border-brand-pink/50 max-w-3xl mx-auto pl-8 md:pl-12 py-4 space-y-12">
+          
+          <div v-for="(task, idx) in timeline" :key="idx" class="relative group">
+            <!-- Timeline Icon Dot -->
+            <div class="absolute -left-[54px] md:-left-[70px] top-1 bg-brand-cream border-4 border-brand-pink w-10 h-10 md:w-14 md:h-14 rounded-full flex items-center justify-center text-xl md:text-2xl group-hover:scale-115 group-hover:bg-brand-pinkLight transition-all duration-300 soft-shadow">
+              {{ task.emoji }}
+            </div>
+            
+            <!-- Time tag -->
+            <div class="inline-block bg-brand-pink/20 text-brand-brownDark font-quicksand font-bold px-3.5 py-1 rounded-lg text-base mb-2">
+              {{ task.time }}
+            </div>
+            
+            <!-- Timeline Card content -->
+            <div class="bg-brand-cream border border-brand-pink/25 rounded-2xl p-6 soft-shadow transform transition-all duration-300 group-hover:translate-x-1.5 group-hover:border-brand-pink">
+              <h3 class="text-2xl font-bold text-brand-brownDark mb-2 flex items-center gap-2">
+                {{ task.title }}
+                <span class="text-xs text-brand-pink font-normal" v-if="task.badge">{{ task.badge }}</span>
+              </h3>
+              <p class="text-lg text-brand-brown leading-relaxed font-sans">{{ task.desc }}</p>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- Gallery Section -->
+      <section id="gallery" class="py-20 bg-brand-cream border-t border-b border-brand-pink/20 px-6 md:px-12">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center space-y-4 mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-brand-brownDark inline-flex items-center gap-3">
+              <span class="text-brand-pink"><i class="fa-solid fa-images"></i></span> 우리 집 사진첩
+            </h2>
+            <p class="text-xl md:text-2xl text-brand-brown">한 장 한 장 다 소장하고 싶은 인생샷 모음 (클릭해서 크게 보아요!)</p>
+            <div class="w-16 h-1.5 bg-brand-pink mx-auto rounded-full"></div>
+          </div>
+          
+          <!-- Category Selector (Interactive) -->
+          <div class="flex justify-center gap-3 mb-10 flex-wrap">
+            <button 
+              v-for="cat in categories" 
+              :key="cat.id"
+              @click="activeCategory = cat.id"
+              :class="activeCategory === cat.id ? 'bg-brand-pink text-brand-brownDark' : 'bg-brand-warmBg hover:bg-brand-pink/20 text-brand-brown'"
+              class="px-5 py-2 rounded-full font-bold text-base md:text-lg transition-all duration-300 soft-shadow border border-brand-pink/10"
+            >
+              {{ cat.label }}
+            </button>
+          </div>
+          
+          <!-- Grid Layout -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            <div 
+              v-for="(img, idx) in filteredGallery" 
+              :key="img.id"
+              @click="openLightbox(img)"
+              class="group cursor-pointer overflow-hidden rounded-3xl bg-brand-warmBg p-3 border border-brand-pink/20 soft-shadow transform transition-all duration-500 hover:scale-[1.03] hover:rotate-1"
+            >
+              <div class="relative h-64 w-full rounded-2xl overflow-hidden bg-brand-pink/10">
+                <!-- Image with subtle lazy effect -->
+                <img 
+                  :src="img.src" 
+                  :alt="img.alt"
+                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div class="absolute inset-0 bg-brand-brownDark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span class="text-brand-cream bg-brand-brown/80 rounded-full px-4 py-2 text-base font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i> 크게 보기
+                  </span>
+                </div>
+              </div>
+              <div class="mt-4 px-2">
+                <span class="text-xs font-bold text-brand-pink bg-brand-pinkLight px-2.5 py-0.5 rounded-full uppercase tracking-wide">{{ img.tag }}</span>
+                <h4 class="text-xl font-bold text-brand-brownDark mt-2 group-hover:text-brand-pink transition-colors">{{ img.title }}</h4>
+                <p class="text-base text-brand-brown/80 mt-1 font-sans">{{ img.date }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lightbox Component -->
+        <div 
+          v-if="lightbox.open" 
+          @click.self="closeLightbox" 
+          class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
+        >
+          <div class="relative max-w-4xl w-full bg-brand-warmBg rounded-3xl overflow-hidden soft-shadow animate-float-gentle max-h-[90vh] flex flex-col">
+            <!-- Close Button -->
+            <button 
+              @click="closeLightbox" 
+              class="absolute top-4 right-4 z-10 w-11 h-11 bg-brand-cream hover:bg-brand-pink text-brand-brownDark rounded-full flex items-center justify-center shadow-md transition-all hover:scale-105 active:scale-95"
+            >
+              <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            
+            <div class="flex flex-col md:flex-row h-full">
+              <!-- Image Section -->
+              <div class="flex-1 bg-black flex items-center justify-center min-h-[300px] md:max-h-[70vh]">
+                <img :src="lightbox.img.src" :alt="lightbox.img.alt" class="max-h-[70vh] object-contain w-full" />
+              </div>
+              
+              <!-- Info Box -->
+              <div class="p-6 md:p-8 w-full md:w-80 bg-brand-cream border-t md:border-t-0 md:border-l border-brand-pink/20 flex flex-col justify-between">
+                <div class="space-y-4">
+                  <span class="bg-brand-pinkLight text-brand-pink text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wider">{{ lightbox.img.tag }}</span>
+                  <h3 class="text-2xl font-bold text-brand-brownDark">{{ lightbox.img.title }}</h3>
+                  <p class="text-base text-brand-brown leading-relaxed font-sans">{{ lightbox.img.desc }}</p>
+                </div>
+                
+                <div class="mt-6 pt-4 border-t border-brand-pink/10 flex items-center justify-between text-base">
+                  <span class="text-brand-brown font-quicksand font-semibold"><i class="fa-solid fa-calendar-days text-brand-pink/80 mr-1.5"></i> {{ lightbox.img.date }}</span>
+                  <button 
+                    @click="likePhoto(lightbox.img.id)" 
+                    class="flex items-center gap-1.5 text-brand-pink hover:scale-110 active:scale-95 duration-200"
+                  >
+                    <i class="fa-solid fa-heart"></i>
+                    <span class="font-bold font-quicksand">{{ photoLikes[lightbox.img.id] || 0 }}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Favorite Things Section -->
+      <section id="favorites" class="py-20 px-6 md:px-12 max-w-6xl mx-auto">
+        <div class="text-center space-y-4 mb-16">
+          <span class="bg-brand-sage text-brand-brownDark font-bold px-4 py-1 rounded-full text-base">Favorite Things</span>
+          <h2 class="text-4xl md:text-5xl font-bold text-brand-brownDark">구름이가 좋아하는 5가지</h2>
+          <p class="text-xl md:text-2xl text-brand-brown">행복할 때마다 꼬리를 기분 좋게 통통 흔들게 하는 마법의 비법들</p>
+          <div class="w-16 h-1.5 bg-brand-sage mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div 
+            v-for="(fav, index) in favorites" 
+            :key="index" 
+            class="bg-brand-cream border border-brand-pink/15 rounded-3xl p-6 text-center soft-shadow transform hover:translate-y-[-8px] transition-all duration-500 group"
+          >
+            <!-- Large Floating Soft-Colored Icon container -->
+            <div :class="`w-20 h-20 mx-auto rounded-[50%_40%_50%_40%_/_40%_50%_40%_50%] ${fav.bgColor} flex items-center justify-center text-4xl mb-6 shadow-sm group-hover:animate-float-gentle`">
+              <i :class="fav.icon + ' text-brand-brownDark/85'"></i>
+            </div>
+            
+            <h3 class="text-2xl font-bold text-brand-brownDark mb-2">{{ fav.title }}</h3>
+            <p class="text-base text-brand-brown leading-relaxed font-sans">{{ fav.desc }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Fun Facts Section -->
+      <section id="funfacts" class="py-20 bg-brand-pinkLight border-t border-brand-pink/20 px-6 md:px-12 relative overflow-hidden">
+        <!-- Cute decorative speech bubble backdrop -->
+        <div class="absolute -bottom-10 -left-10 text-brand-pink/15 text-[200px] pointer-events-none font-bold">SHH!</div>
+        
+        <div class="max-w-6xl mx-auto relative z-10">
+          <div class="text-center space-y-4 mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-brand-brownDark inline-flex items-center gap-3">
+              🤫 구름이의 비밀 관찰 노트
+            </h2>
+            <p class="text-xl md:text-2xl text-brand-brown">가족들만 알고 있는 아주 특별한 습관들과 숨겨진 치명적인 매력!</p>
+            <div class="w-16 h-1.5 bg-brand-pink mx-auto rounded-full"></div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div 
+              v-for="(fact, index) in funFacts" 
+              :key="index" 
+              class="bg-brand-cream rounded-[24px_12px_24px_12px] p-6 soft-shadow border-2 border-dashed border-brand-pink/30 hover:border-brand-pink hover:scale-105 transition-all duration-300 flex flex-col justify-between"
+            >
+              <div>
+                <span class="text-4xl inline-block mb-4">{{ fact.emoji }}</span>
+                <h4 class="text-2xl font-bold text-brand-brownDark mb-2">{{ fact.title }}</h4>
+                <p class="text-base text-brand-brown leading-relaxed font-sans">{{ fact.desc }}</p>
+              </div>
+              <div class="mt-4 pt-4 border-t border-brand-pink/10 text-right">
+                <span class="text-xs bg-brand-pinkLight text-brand-brown font-bold px-2 py-0.5 rounded-md">관찰난이도 ★★★</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-brand-brownDark text-brand-warmBg py-16 px-6 md:px-12 text-center border-t border-brand-pink/30 relative">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand-cream text-brand-pink w-16 h-16 rounded-full border border-brand-pink/20 flex items-center justify-center text-2xl soft-shadow animate-bounce-slow">
+        ❤️
+      </div>
+      
+      <div class="max-w-4xl mx-auto space-y-6">
+        <h2 class="text-4xl font-bold text-brand-yellow font-quicksand">Always Together ❤️</h2>
+        <p class="text-lg md:text-xl text-brand-warmBg/80 font-sans max-w-lg mx-auto">
+          말은 통하지 않지만 하루 분량만큼 무한한 애정으로 우리의 품을 채워주는 소중한 천사, 구름이의 홈페이지였습니다. 방문해주신 여러분 고마워요!
+        </p>
+        
+        <div class="flex justify-center gap-6 text-2xl pt-4">
+          <a href="#" class="hover:text-brand-pink transition-colors" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="hover:text-brand-pink transition-colors" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#" class="hover:text-brand-pink transition-colors" title="Photos"><i class="fa-solid fa-heart"></i></a>
+        </div>
+        
+        <div class="text-sm text-brand-warmBg/50 pt-8 border-t border-brand-warmBg/10 font-quicksand">
+          &copy; 2026 Cloud-Diary. All rights reserved. Made with Warm-Pastel Heart & Vue.js.
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    const { createApp, ref, computed } = Vue;
+
+    const App = {
+      setup() {
+        // Heart count state (for emotional interaction)
+        const heartCount = ref(1204);
+
+        // Photo likes state
+        const photoLikes = ref({
+          1: 34,
+          2: 52,
+          3: 21,
+          4: 45,
+          5: 67,
+          6: 89
+        });
+
+        // About - Key Profile Specs
+        const petInfo = ref([
+          { label: '이름', value: '구름이 (Cloud)', icon: 'fa-solid fa-signature' },
+          { label: '성별', value: '의젓한 왕자님 ♂', icon: 'fa-solid fa-venus-mars' },
+          { label: '나이', value: '3살 (2023년 봄에 태어남)', icon: 'fa-solid fa-cake-candles' },
+          { label: '종류', value: '말티푸 (말티즈 + 토이푸들)', icon: 'fa-solid fa-dog' },
+          { label: '특징', value: '엄마 껌딱지, 사람 친화력 100%', icon: 'fa-solid fa-star' },
+          { label: '취미', value: '낙엽 밟기, 양말 모으기', icon: 'fa-solid fa-icons' }
+        ]);
+
+        // Daily Life - Schedule Data
+        const timeline = ref([
+          {
+            emoji: '☀️',
+            time: '08:00 AM',
+            title: '눈 뜨기 & 뽀뽀 모닝 세례',
+            badge: '매우 바쁨',
+            desc: '언니와 엄마 얼굴에 무한한 핥기 세례와 꼬리 폭탄을 날리며 세상에서 제일 행복하게 눈을 뜨게 도와줘요.'
+          },
+          {
+            emoji: '🌳',
+            time: '10:00 AM',
+            title: '동네 산책 & 노즈워크 수사반장',
+            badge: '최고로 설렘',
+            desc: '풀숲에 숨겨진 냄새를 킁킁거리며 동네 소식을 업데이트해요. 지나가는 길고양이 친구들을 향해 작게 아는 척도 합니다.'
+          },
+          {
+            emoji: '💤',
+            time: '01:00 PM',
+            title: '햇살 맛집 아래 충전 타임',
+            badge: '꿀잠 보장',
+            desc: '가장 따뜻하게 햇살이 드는 거실 소파 위에 몸을 말랑말랑하게 둥글게 말고 조용히 낮잠의 세계에 빠져요.'
+          },
+          {
+            emoji: '🧸',
+            time: '04:00 PM',
+            title: '수수께끼 장난감 사냥꾼',
+            badge: '에너지 100%',
+            desc: '최애 애착 인형인 공룡이 인형을 물고 와서 놀아달라며 슬쩍 건네요. 터그놀이를 십여 분 힘차게 펼쳐야 만족합니다.'
+          },
+          {
+            emoji: '🍖',
+            time: '07:00 PM',
+            title: '세상 진지한 간식 & 저녁 타임',
+            badge: '눈빛 발사',
+            desc: '영양이 듬뿍 담긴 습식 연어 사료와 달콤한 단호박 트릿을 먹는 저녁 시간이에요. 양보할 수 없는 냠냠타임!'
+          },
+          {
+            emoji: '🌙',
+            time: '10:00 PM',
+            title: '가족들 가운데서 포근히 꿈나라',
+            badge: '완전 충전',
+            desc: '다들 잘 준비를 마치면 이불 속에 쓱 기어들어와 누나 다리를 가로베개하고 깊고 달콤하게 잠에 든답니다.'
+          }
+        ]);
+
+        // Gallery Data - easily interchangeable Unsplash placeholders
+        const gallery = ref([
+          {
+            id: 1,
+            tag: 'DAILY',
+            title: '햇살을 받으며 촉촉한 코 🐶',
+            desc: '소파에서 고르릉거리던 도중, 맑은 눈망울로 카메라를 쳐다보는 순간을 우연히 건진 구름이의 심쿵 샷.',
+            src: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=600',
+            date: '2026.04.12',
+            category: 'daily'
+          },
+          {
+            id: 2,
+            tag: 'OUTDOOR',
+            title: '신나게 달려가기 직전!',
+            desc: '바람을 가르며 들판을 달리는 날. 마치 공중 부양을 하듯 가볍게 통통 튀며 날아다니는 솜털 인형 상태.',
+            src: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=600',
+            date: '2026.05.01',
+            category: 'walk'
+          },
+          {
+            id: 3,
+            tag: 'SLEEPY',
+            title: '말랑하게 녹아내린 낮잠 대장',
+            desc: '세상사 고민 다 내려두고 꿀벌 모양 헤어밴드를 한 채 평화롭게 눈 감은 귀여운 이불 속 풍경.',
+            src: 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&q=80&w=600',
+            date: '2026.05.15',
+            category: 'sleep'
+          },
+          {
+            id: 4,
+            tag: 'DAILY',
+            title: '초롱초롱한 눈빛으로 바라보기',
+            desc: '맛있는 고구마 간식 냄새를 맡고, 세탁소 소리가 나도 한 곳만 무한 응시하는 진지한 예술가적 모먼트.',
+            src: 'https://images.unsplash.com/photo-1537151608828-ea2b117b6281?auto=format&fit=crop&q=80&w=600',
+            date: '2026.05.28',
+            category: 'daily'
+          },
+          {
+            id: 5,
+            tag: 'WALK',
+            title: '네 잎 클로버를 찾아서',
+            desc: '동네 공원에서 인생 최고의 냄새를 발견하고 연신 기분 좋게 킁킁 발자국을 남기는 중이에요.',
+            src: 'https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?auto=format&fit=crop&q=80&w=600',
+            date: '2026.06.02',
+            category: 'walk'
+          },
+          {
+            id: 6,
+            tag: 'SLEEPY',
+            title: '이불을 가슴까지 야무지게',
+            desc: '마치 사람처럼 베개를 베고 이불을 살포시 덮고 누워있어서 모두를 배꼽 잡게 만들었던 잠자리 사진.',
+            src: 'https://images.unsplash.com/photo-1583511655826-05700d52f4d9?auto=format&fit=crop&q=80&w=600',
+            date: '2026.06.14',
+            category: 'sleep'
+          }
+        ]);
+
+        const categories = ref([
+          { id: 'all', label: '전체보기' },
+          { id: 'daily', label: '포근한 일상' },
+          { id: 'walk', label: '기분 좋은 산책' },
+          { id: 'sleep', label: '꿀잠 모음' }
+        ]);
+
+        const activeCategory = ref('all');
+
+        // Filtered Gallery Computed
+        const filteredGallery = computed(() => {
+          if (activeCategory.value === 'all') return gallery.value;
+          return gallery.value.filter(img => img.category === activeCategory.value);
+        });
+
+        // Lightbox State
+        const lightbox = ref({
+          open: false,
+          img: null
+        });
+
+        const openLightbox = (img) => {
+          lightbox.value.img = img;
+          lightbox.value.open = true;
+        };
+
+        const closeLightbox = () => {
+          lightbox.value.open = false;
+        };
+
+        const likePhoto = (id) => {
+          photoLikes.value[id] = (photoLikes.value[id] || 0) + 1;
+          heartCount.value += 1;
+        };
+
+        // Favorite Things Data
+        const favorites = ref([
+          {
+            title: '달콤한 군고구마',
+            desc: '부엌에서 촉촉하게 잘 익은 고구마 껍질 벗기는 소리만 나면 번개보다 빠르게 달려와요.',
+            icon: 'fa-solid fa-cookie-bite',
+            bgColor: 'bg-brand-pinkLight'
+          },
+          {
+            title: '삐삐 소리 인형',
+            desc: '누를 때마다 삑삑 우렁찬 소리가 나는 토끼 봉제인형만 있으면 혼자서도 한 시간 순삭!',
+            icon: 'fa-solid fa-shapes',
+            bgColor: 'bg-brand-yellowLight'
+          },
+          {
+            title: '노랑 테니스공',
+            desc: '거실 끝에서 끝으로 도르륵 굴려주는 테니스공을 앙 다물고 되찾아오는 던지기 훈련 최애.',
+            icon: 'fa-solid fa-baseball',
+            bgColor: 'bg-brand-sage/40'
+          },
+          {
+            title: '낙엽 밟는 산책',
+            desc: '가을날 바스락거리는 마른 낙엽들 위를 사뿐사뿐 밟고 지나가는 발바닥 소리를 사랑해요.',
+            icon: 'fa-solid fa-leaf',
+            bgColor: 'bg-brand-yellowLight'
+          },
+          {
+            title: '가족들 품 한가운데',
+            desc: '언니와 엄마 아빠가 일렬로 둘러앉아 있을 때 교묘하게 그 중심에 등 대고 눕기를 좋아해요.',
+            icon: 'fa-solid fa-people-roof',
+            bgColor: 'bg-brand-pinkLight'
+          }
+        ]);
+
+        // Fun Facts Data
+        const funFacts = ref([
+          {
+            emoji: '🐾',
+            title: '왼발잡이 강아지',
+            desc: '"손!"을 달라고 요청하면 높은 확률로 왼손 발바닥을 야무지게 먼저 척 올려두곤 한답니다.'
+          },
+          {
+            emoji: '🍠',
+            title: '고구마 스나이퍼',
+            desc: '깊은 잠에 취한 것 같다가도 군고구마의 은은한 향이 풍기면 기적처럼 귀를 쫑긋거리며 나타나요.'
+          },
+          {
+            emoji: '☔',
+            title: '비 오는 날은 게으름뱅이',
+            desc: '창밖에 비가 내려 어두컴컴해지면 평소와 달리 꼼짝하지 않고 침대 구석에서 게으름을 누려요.'
+          },
+          {
+            emoji: '👀',
+            title: '사람 같은 TV 시청',
+            desc: 'TV 속에 귀여운 동물이 출연하거나 동물이 우는 소리가 나면 목을 갸웃거리며 엄청 집중해서 봅니다.'
+          }
+        ]);
+
+        // Spawn Interactive Floating Hearts Action
+        const spawnHearts = (event) => {
+          heartCount.value += 10;
+          
+          // Generate 10 tiny floating hearts around the clicked point
+          const heartEmojis = ['❤️', '💖', '🐾', '☁️', '🐶'];
+          const maxHearts = 8;
+          
+          for (let i = 0; i < maxHearts; i++) {
+            const heart = document.createElement('span');
+            heart.classList.add('floating-heart');
+            
+            // Randomize emoji type
+            const randEmoji = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+            heart.innerText = randEmoji;
+            
+            // Set styles and positions around click coords
+            const size = Math.random() * 15 + 15; // 15px to 30px
+            const leftOffset = (Math.random() - 0.5) * 60; // offset x range
+            const topOffset = (Math.random() - 0.5) * 40; // offset y range
+            
+            heart.style.left = `${event.pageX + leftOffset}px`;
+            heart.style.top = `${event.pageY + topOffset}px`;
+            heart.style.fontSize = `${size}px`;
+            
+            // Append to body
+            document.body.appendChild(heart);
+            
+            // Remove from DOM after transition
+            setTimeout(() => {
+              heart.remove();
+            }, 1200);
+          }
+        };
+
+        return {
+          heartCount,
+          petInfo,
+          timeline,
+          gallery,
+          categories,
+          activeCategory,
+          filteredGallery,
+          lightbox,
+          photoLikes,
+          openLightbox,
+          closeLightbox,
+          likePhoto,
+          favorites,
+          funFacts,
+          spawnHearts
+        };
+      }
+    };
+
+    createApp(App).mount('#app');
+  </script>
+</body>
+</html>
